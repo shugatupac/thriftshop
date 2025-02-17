@@ -4,6 +4,7 @@ import MainContent from "./dashboard/MainContent";
 import ProductsView from "./dashboard/products/ProductsView";
 import OrdersView from "./dashboard/orders/OrdersView";
 import CategoriesView from "./dashboard/categories/CategoriesView";
+import SettingsView from "./dashboard/settings/SettingsView";
 
 interface HomeProps {
   initialStats?: {
@@ -33,6 +34,7 @@ const Home = ({
       {activeNavItem === "products" && <ProductsView />}
       {activeNavItem === "orders" && <OrdersView />}
       {activeNavItem === "categories" && <CategoriesView />}
+      {activeNavItem === "settings" && <SettingsView />}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React from "react";
+import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -115,7 +116,7 @@ const Sidebar = ({
         <NavItem
           icon={<LogOut className="h-5 w-5" />}
           label="Logout"
-          onClick={() => console.log("Logout clicked")}
+          onClick={() => auth.logout()}
         />
       </div>
     </div>
