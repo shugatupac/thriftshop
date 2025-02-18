@@ -2,6 +2,11 @@ import { Suspense } from "react";
 import { useRoutes, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
 import ShopView from "./components/shop/ShopView";
+import ProductDetails from "./components/shop/ProductDetails";
+import CategoryView from "./components/shop/CategoryView";
+import WishlistView from "./components/shop/WishlistView";
+import OrdersView from "./components/shop/OrdersView";
+import AccountView from "./components/shop/AccountView";
 import routes from "tempo-routes";
 
 function App() {
@@ -11,6 +16,11 @@ function App() {
         <Routes>
           <Route path="/" element={<ShopView />} />
           <Route path="/admin" element={<Home />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/category/:category" element={<CategoryView />} />
+          <Route path="/wishlist" element={<WishlistView />} />
+          <Route path="/orders" element={<OrdersView />} />
+          <Route path="/account" element={<AccountView />} />
         </Routes>
         {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
       </>
