@@ -11,7 +11,7 @@ interface ShopLayoutProps {
 }
 
 const ShopLayout = ({ children }: ShopLayoutProps) => {
-  const [cartCount, setCartCount] = useState(0);
+  const cartCount = useCart((state) => state.totalItems());
   const navigate = useNavigate();
 
   return (
@@ -66,7 +66,7 @@ const ShopLayout = ({ children }: ShopLayoutProps) => {
               variant="ghost"
               size="icon"
               className="rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
-              onClick={() => navigate("/account")}
+              onClick={() => navigate("/account/profile")}
             >
               <User className="h-5 w-5" />
             </Button>

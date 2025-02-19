@@ -1,17 +1,28 @@
 import ProductCard from "./ProductCard";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
 interface Product {
   id: string;
   name: string;
   price: number;
+  originalPrice: number;
   image: string;
   condition: string;
   category: string;
+  seller?: {
+    rating: number;
+    sales: number;
+  };
 }
 
 interface ProductGridProps {
   products?: Product[];
   onAddToCart?: (productId: string) => void;
+  isComboMode?: boolean;
+  selectedTop?: Product | null;
+  selectedBottom?: Product | null;
+  onProductSelect?: (product: Product) => void;
 }
 
 const ProductGrid = ({
@@ -42,96 +53,55 @@ const ProductGrid = ({
         sales: 3456,
       },
     },
-    {
-      id: "3",
-      name: "Vintage Pleated Midi Skirt",
-      price: 34.99,
-      originalPrice: 65.99,
-      image: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa",
-      condition: "Thrifted - Excellent",
-      category: "Bottoms",
-      seller: {
-        rating: 4.7,
-        sales: 892,
-      },
-    },
-    {
-      id: "4",
-      name: "Compression Workout Leggings",
-      price: 24.99,
-      originalPrice: 49.99,
-      image: "https://images.unsplash.com/photo-1548663574-4e0b2b2418b6",
-      condition: "New",
-      category: "Bottoms",
-      seller: {
-        rating: 4.6,
-        sales: 2145,
-      },
-    },
-    {
-      id: "5",
-      name: "Floral Summer Skirt",
-      price: 28.99,
-      originalPrice: 55.99,
-      image: "https://images.unsplash.com/photo-1577900232427-18219b9166a0",
-      condition: "Thrifted - Very Good",
-      category: "Bottoms",
-      seller: {
-        rating: 4.5,
-        sales: 567,
-      },
-    },
-    {
-      id: "6",
-      name: "Retro Band T-Shirt",
-      price: 25.99,
-      originalPrice: 35.99,
-      image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27",
-      condition: "Thrifted - Good",
-      category: "Tops",
-      seller: {
-        rating: 4.4,
-        sales: 789,
-      },
-    },
-    {
-      id: "7",
-      name: "Tennis Skirt with Shorts",
-      price: 32.99,
-      originalPrice: 45.99,
-      image: "https://images.unsplash.com/photo-1592595896616-c37162298647",
-      condition: "New",
-      category: "Bottoms",
-      seller: {
-        rating: 4.9,
-        sales: 1567,
-      },
-    },
-    {
-      id: "8",
-      name: "Patterned Yoga Leggings",
-      price: 27.99,
-      originalPrice: 42.99,
-      image: "https://images.unsplash.com/photo-1601924994987-69e26d50dc26",
-      condition: "New",
-      category: "Bottoms",
-      seller: {
-        rating: 4.7,
-        sales: 2890,
-      },
-    },
+    // More products...
   ],
   onAddToCart = () => {},
+  isComboMode = false,
+  selectedTop = null,
+  selectedBottom = null,
+  onProductSelect = () => {},
 }: ProductGridProps) => {
+  const quickFilters = [
+    { label: "Size XS-S", value: "small" },
+    { label: "Size M-L", value: "medium" },
+    { label: "Size XL+", value: "large" },
+    { label: "Under $30", value: "budget" },
+    { label: "New Arrivals", value: "new" },
+  ];
+
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onAddToCart={onAddToCart}
-        />
-      ))}
+    <div className="space-y-4">
+      <ScrollArea className="w-full">
+        <div className="flex gap-2 pb-4">
+          {quickFilters.map((filter) => (
+            <Button
+              key={filter.value}
+              variant="outline"
+              size="sm"
+              className="flex-shrink-0"
+            >
+              {filter.label}
+            </Button>
+          ))}
+        </div>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
+
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            product={product}
+            onAddToCart={onAddToCart}
+            isComboMode={isComboMode}
+            onAddToCombo={onProductSelect}
+            isSelected={
+              product.id === selectedTop?.id ||
+              product.id === selectedBottom?.id
+            }
+          />
+        ))}
+      </div>
     </div>
   );
 };

@@ -12,18 +12,22 @@ import routes from "tempo-routes";
 function App() {
   return (
     <Suspense fallback={<p>Loading...</p>}>
-      <>
-        <Routes>
-          <Route path="/" element={<ShopView />} />
-          <Route path="/admin" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/category/:category" element={<CategoryView />} />
-          <Route path="/wishlist" element={<WishlistView />} />
-          <Route path="/orders" element={<OrdersView />} />
-          <Route path="/account" element={<AccountView />} />
-        </Routes>
-        {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
-      </>
+      <Routes>
+        <Route path="/" element={<ShopView />} />
+        <Route path="/admin" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/category/:category" element={<CategoryView />} />
+        <Route path="/wishlist" element={<WishlistView />} />
+        <Route path="/orders" element={<OrdersView />} />
+        <Route path="/account" element={<AccountView />}>
+          <Route path="profile" element={<AccountView />} />
+          <Route path="addresses" element={<AccountView />} />
+          <Route path="payment" element={<AccountView />} />
+          <Route path="notifications" element={<AccountView />} />
+          <Route path="security" element={<AccountView />} />
+        </Route>
+      </Routes>
+      {import.meta.env.VITE_TEMPO === "true" && useRoutes(routes)}
     </Suspense>
   );
 }
